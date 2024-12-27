@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .quiz-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button.correct {
+            background-color: #4caf50;
+            color: #fff;
+        }
+        button.incorrect {
+            background-color: #f44336;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="quiz"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { 
+                question: "¿De dónde ___ (tú)?",
+                options: ["es", "soy", "eres"],
+                correct: 2
+            },
+            {
+                question: "El libro ___ encima de la mesa.",
+                options: ["está", "es", "están"],
+                correct: 0
+            },
+            {
+                question: "Mi amiga ___ muy simpática.",
+                options: ["soy", "está", "es"],
+                correct: 2
+            },
+            {
+                question: "Ahora yo ___ en la escuela.",
+                options: ["está", "soy", "estoy"],
+                correct: 2
+            },
+            {
+                question: "En la clase ___ veinte estudiantes.",
+                options: ["hay", "son", "están"],
+                correct: 0
+            },
+            {
+                question: "Nosotros ___ cansados hoy.",
+                options: ["estamos", "son", "somos"],
+                correct: 0
+            },
+            {
+                question: "La reunión ___ a las tres.",
+                options: ["hay", "es", "está"],
+                correct: 1
+            },
+            {
+                question: "En el parque ___ muchos niños jugando.",
+                options: ["hay", "es", "están"],
+                correct: 0
+            },
+            {
+                question: "¿De dónde ___ tú?",
+                options: ["eres", "estás", "es"],
+                correct: 0
+            },
+            {
+                question: "La casa ___ de color blanco.",
+                options: ["es", "hay", "está"],
+                correct: 0
+            },
+            {
+                question: "Mi hermano y yo ___ muy altos.",
+                options: ["están", "somos", "estamos"],
+                correct: 1
+            },
+            {
+                question: "Ahora ___ una fiesta en la plaza.",
+                options: ["hay", "es", "está"],
+                correct: 0
+            },
+            {
+                question: "El coche ___ delante de la casa.",
+                options: ["está", "hay", "es"],
+                correct: 0
+            },
+            {
+                question: "El examen ___ difícil.",
+                options: ["es", "soy", "está"],
+                correct: 0
+            },
+            {
+                question: "¿Qué ___ en la nevera?",
+                options: ["están", "hay", "es"],
+                correct: 1
+            },
+            {
+                question: "Nosotros ___ en el restaurante ahora.",
+                options: ["somos", "hay", "estamos"],
+                correct: 2
+            },
+            {
+                question: "¿Dónde ___ la biblioteca?",
+                options: ["está", "hay", "es"],
+                correct: 0
+            },
+            {
+                question: "Ellos ___ estudiantes de español.",
+                options: ["son", "es", "están"],
+                correct: 0
+            },
+            {
+                question: "En mi ciudad ___ un parque muy grande.",
+                options: ["hay", "está", "es"],
+                correct: 0
+            },
+            {
+                question: "Tú ___ muy guapo hoy.",
+                options: ["eres", "estás", "es"],
+                correct: 1
+            },
+            {
+                question: "Yo no ___ (tener) mucho tiempo hoy.",
+                options: ["tengo", "tienes", "tienen"],
+                correct: 0
+            },
+            {
+                question: "Nosotros ___ (ir) al cine los sábados.",
+                options: ["vamos", "van", "voy"],
+                correct: 0
+            },
+            {
+                question: "Ella ___ (ser) muy amable.",
+                options: ["es", "está", "eres"],
+                correct: 0
+            },
+            {
+                question: "¿Qué ___ (decir) tú?",
+                options: ["dice", "digo", "dices"],
+                correct: 2
+            },
+            {
+                question: "Mis padres ___ (venir) a visitarme mañana.",
+                options: ["vengo", "vienen", "venimos"],
+                correct: 1
+            },
+            {
+                question: "Yo siempre ___ (hacer) la tarea por la tarde.",
+                options: ["haces", "hago", "hace"],
+                correct: 1
+            },
+            {
+                question: "Ellos no ___ (poder) salir hoy porque están ocupados.",
+                options: ["puedo", "pueden", "podemos"],
+                correct: 1
+            },
+            {
+                question: "Nosotros ___ (querer) aprender español.",
+                options: ["queremos", "quieren", "quiero"],
+                correct: 0
+            },
+            {
+                question: "Tú ___ (ver) la televisión por las noches.",
+                options: ["veo", "ves", "ven"],
+                correct: 1
+            },
+            {
+                question: "Yo ___ (dormir) ocho horas cada noche.",
+                options: ["duerme", "duermo", "dormimos"],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se escribe el número ‘1492’ ?",
+                options: ["mil trescientos cuarenta y dos", "cuatro mil novecientos dos", "mil cuatrocientos noventa y dos"],
+                correct: 2
+            },
+            {
+                question: "¿Cómo se escribe el número ‘2023’?",
+                options: ["dos mil veintitrés", "dos mil ciento tres", "veinte mil veintitrés"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se escribe el número ‘350’?",
+                options: ["tres mil quinientos", "trescientos cincuenta", "cincuenta trescientos"],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se escribe el número ‘789’?",
+                options: ["setecientos ochenta y nueve", "setenta y ocho mil novecientos", "ochocientos setenta y nueve"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se escribe el número ‘1.001’?",
+                options: ["mil uno", "uno mil", "mil cien"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se escribe el número ‘5.678’?",
+                options: ["cinco mil seis setenta y ocho", "cinco mil seiscientos setenta y ocho", "cinco mil ochocientos sesenta"],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se escribe el número ‘12.345’?",
+                options: ["doce mil trescientos cuarenta y cinco", "doce mil cuarenta y cinco", "ciento veintitrés mil cuatrocientos cinco"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se escribe el número ‘900.000’?",
+                options: ["noventa mil", "novecientos mil", "novecientos millones"],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se escribe el número ‘45.321’?",
+                options: ["cuarenta y cinco mil trescientos veintiuno", "cuarenta y cinco mil tres veintiuno", "cuatro mil quinientos treinta y uno"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se escribe el número ‘76.000’?",
+                options: ["setenta mil seiscientos", "setenta y seis mil", "setenta y seiscientos"],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se escribe el número ‘1.000.000’?",
+                options: ["un millón", "mil mil", "millón uno"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se escribe el número \"432\" en palabras?",
+                options: ["Cuatrocientos treinta y dos", "Cuatrocientos veintitrés", "Cuatro mil treinta y dos"],
+                correct: 0
+            },
+            {
+                question: "Yo ___ (hablar) español.",
+                options: ["habla", "hablo", "hablan"],
+                correct: 1
+            },
+            {
+                question: "La casa ___ (ser) grande.",
+                options: ["soy", "es", "está"],
+                correct: 1
+            },
+            {
+                question: "Nosotros ___ (comer) en el restaurante.",
+                options: ["como", "comes", "comemos"],
+                correct: 2
+            },
+            {
+                question: "Las flores son muy ___.",
+                options: ["bonitas", "altos", "limpias"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se dice \"dirty\" en español?",
+                options: ["Sucio", "Limpio", "Feo"],
+                correct: 0
+            },
+            {
+                question: "¿Cómo se dice ‘full’ en español?",
+                options: ["vacío", "lleno", "largo"],
+                correct: 1
+            },
+            {
+                question: "___ amigo de Juan es simpático.",
+                options: ["Los", "El", "La"],
+                correct: 1
+            },
+            {
+                question: "___ mesa es grande.",
+                options: ["Un", "El", "La"],
+                correct: 2
+            },
+            {
+                question: "___ perros están en el parque.",
+                options: ["Los", "Las", "Un"],
+                correct: 0
+            }
+        ];
+
+
+        const quizContainer = document.getElementById('quiz');
+        let currentQuestionIndex = 0;
+
+        function showQuestion() {
+            const questionData = questions[currentQuestionIndex];
+            quizContainer.innerHTML = `
+                <div class="question">${questionData.question}</div>
+                <div class="options">
+                    ${questionData.options.map((option, index) => `
+                        <button class="option" onclick="checkAnswer(${index})">${option}</button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function checkAnswer(selected) {
+            const questionData = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.option');
+            buttons.forEach((button, index) => {
+                if (index === questionData.correct) {
+                    button.classList.add('correct');
+                } else {
+                    button.classList.add('incorrect');
+                }
+                button.disabled = true;
+            });
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    showQuestion();
+                } else {
+                    quizContainer.innerHTML = '<div class="question">Quiz terminado. ¡Bien hecho!</div>';
+                }
+            }, 1500);
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
